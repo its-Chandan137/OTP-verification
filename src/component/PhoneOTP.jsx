@@ -25,11 +25,17 @@ function PhoneOTP() {
         else
         {
             setShowOTPInput(true);
+            // otpGet(OTP2);
         }
     }
+
+    // get otp try 1
+
+
+
   return (
     <div className='main-div'>
-        
+
         {!showOTPInput? 
 
         <form className='loginForm' onSubmit={handlePhoneSubmit}>

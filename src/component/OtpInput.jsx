@@ -5,6 +5,8 @@ function OtpInput({length = 4, onOtpSubmit=()=>{}}) {
     const [otp,setOtp] = useState(new Array(length).fill(""))
     const inputRef = useRef([])
 
+    let OTP2 = ""; // otp from BE........................
+
     useEffect(() => {
         if(inputRef.current[0])
         {
@@ -23,15 +25,21 @@ function OtpInput({length = 4, onOtpSubmit=()=>{}}) {
 
         // submit trigger
         const combinedOtp = newOtp.join("");
-        if(combinedOtp.length == length) onOtpSubmit(combinedOtp);
+        if(combinedOtp.length == length || OTP2.length === 4)
+        {
+            onOtpSubmit(combinedOtp); 
+        } // Needed changes... either add button for submit or add auto recognise...
 
         //moving to next input field after filling current
         if(val && i < length-1 && inputRef.current[i + 1])
         {
             inputRef.current[i + 1].focus();
             // inputRef.current[otp.indexOf("")].focus();
-
         }
+        // else if(OTP2.length === 4)
+        // {
+        //     inputRef.length.focus();
+        // }
     };
     const handleClick = (i) =>{
         inputRef.current[i].setSelectionRange(1,1)
@@ -52,6 +60,20 @@ function OtpInput({length = 4, onOtpSubmit=()=>{}}) {
         }
     };
 
+    
+    const verifyOtp = (x,val) =>{
+        if(OTP2.length === 4)
+        {
+
+            return OTP2[x];
+        }   
+        else
+        {
+            return val;
+        }
+    }
+    // OTP2.length==4? OTP2[i] : val
+
   return(
     <div className='inputContainer'>
         {
@@ -60,7 +82,7 @@ function OtpInput({length = 4, onOtpSubmit=()=>{}}) {
                 <input 
                 key={i} 
                 type='text' 
-                value={val} // val input from 'handleChange' func.
+                value={verifyOtp(i,val)} // val input from 'handleChange' func.
                 ref={(input) => (inputRef.current[i] = input)}
                 onChange={(e) => {handleChange(i,e)}} //assigning value to 'val'
                 onClick={() => {handleClick(i)}} // selects only empty input box

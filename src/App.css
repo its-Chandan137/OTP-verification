@@ -14,8 +14,8 @@ body{
 }
 
 .container1{
-  width: 50lvh;
-  height: 40lvh;
+  width: 45lvh;
+  height: 35lvh;
   background-color: rgba(5, 79, 92, 0.786);
   margin-top: 30px;
   display: flex;
@@ -47,7 +47,7 @@ body h1{
 .loginForm{
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
 }
@@ -87,7 +87,7 @@ body h1{
 }
 
 .msgAndOtp p{
-  font-family: cursive;
+  /* font-family: cursive; */
   color: rgba(255, 255, 255, 0.718);
 }
 
