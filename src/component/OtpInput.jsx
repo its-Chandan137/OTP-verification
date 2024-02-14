@@ -5,7 +5,7 @@ function OtpInput({length = 4, onOtpSubmit=()=>{}}) {
     const [otp,setOtp] = useState(new Array(length).fill(""))
     const inputRef = useRef([])
 
-    let OTP2 = ""; // otp from BE........................
+    let OTP2 = "2345"; // otp from BE........................
 
     useEffect(() => {
         if(inputRef.current[0])
@@ -20,25 +20,34 @@ function OtpInput({length = 4, onOtpSubmit=()=>{}}) {
         const val = e.target.value; // assigining value for 'val'
         if(isNaN(val)) return; // should be a number
         const newOtp = [...otp];
-        newOtp[i] = val.substring(val.length - 1); //selecting value from last index
-        setOtp(newOtp);
-
-        // submit trigger
-        const combinedOtp = newOtp.join("");
-        if(combinedOtp.length == length || OTP2.length === 4)
-        {
-            onOtpSubmit(combinedOtp); 
-        } // Needed changes... either add button for submit or add auto recognise...
-
-        //moving to next input field after filling current
-        if(val && i < length-1 && inputRef.current[i + 1])
-        {
-            inputRef.current[i + 1].focus();
-            // inputRef.current[otp.indexOf("")].focus();
-        }
-        // else if(OTP2.length === 4)
+        // if(OTP2.length == 4)
         // {
-        //     inputRef.length.focus();
+        //     newOtp[i] = OTP2.map((x)=>x)
+        //     setOtp(newOtp)
+        //     onOtpSubmit(newOtp)
+        // }
+        // else
+        // {
+            newOtp[i] = val.substring(val.length - 1); //selecting value from last index
+            setOtp(newOtp);
+
+            // submit trigger
+            const combinedOtp = newOtp.join("");
+            if(combinedOtp.length == length)
+            {
+                onOtpSubmit(combinedOtp); 
+            } // Needed changes... either add button for submit or add auto recognise...
+
+            //moving to next input field after filling current
+            if(val && i < length-1 && inputRef.current[i + 1])
+            {
+                inputRef.current[i + 1].focus();
+                // inputRef.current[otp.indexOf("")].focus();
+            }
+            // else if(OTP2.length === 4)
+            // {
+            //     inputRef.length.focus();
+            // }
         // }
     };
     const handleClick = (i) =>{
@@ -61,18 +70,18 @@ function OtpInput({length = 4, onOtpSubmit=()=>{}}) {
     };
 
     
-    const verifyOtp = (x,val) =>{
-        if(OTP2.length === 4)
-        {
+    // const verifyOtp = (x,val) =>{
+    //     if(OTP2.length === 4)
+    //     {
 
-            return OTP2[x];
-        }   
-        else
-        {
-            return val;
-        }
-    }
-    // OTP2.length==4? OTP2[i] : val
+    //         return OTP2[x];
+    //     }   
+    //     else
+    //     {
+    //         return val;
+    //     }
+    // }
+    // verifyOtp(i,val)
 
   return(
     <div className='inputContainer'>
@@ -82,7 +91,7 @@ function OtpInput({length = 4, onOtpSubmit=()=>{}}) {
                 <input 
                 key={i} 
                 type='text' 
-                value={verifyOtp(i,val)} // val input from 'handleChange' func.
+                value={val} // val input from 'handleChange' func.
                 ref={(input) => (inputRef.current[i] = input)}
                 onChange={(e) => {handleChange(i,e)}} //assigning value to 'val'
                 onClick={() => {handleClick(i)}} // selects only empty input box
